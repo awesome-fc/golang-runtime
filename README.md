@@ -2,6 +2,10 @@
 
 Custom Runtime go sample
 
+[Custom Runtime manual](https://help.aliyun.com/document_detail/132044.html)
+
+[基于custom runtime 打造 golang runtime](https://help.aliyun.com/document_detail/132053.html)
+
 ## Normal Invoke(No-HTTP-Trigger)
 
 For No-HTTP-Trigger invoke, we provide a simple framework that favors your rapid development.
