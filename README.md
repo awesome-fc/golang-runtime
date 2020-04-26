@@ -6,7 +6,7 @@ Custom Runtime go sample
 
 [基于custom runtime 打造 golang runtime](https://help.aliyun.com/document_detail/132053.html)
 
-## Normal Invoke(No-HTTP-Trigger)
+## Event Function (No-HTTP-Trigger)
 
 For No-HTTP-Trigger invoke, we provide a simple framework that favors your rapid development.
 
@@ -42,7 +42,7 @@ func main() {
 ```
 
 
-## HTTP Trigger Invoke
+## HTTP Function
 
 Just implementing an HTTP server, Start the server with port = os.Getenv("FC_SERVER_PORT")
 

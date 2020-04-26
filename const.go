@@ -16,10 +16,11 @@ const (
 	fcServiceLogProject = "x-fc-service-logproject"
 	fcServiceLogstore   = "x-fc-service-logstore"
 
-	fcRegion    = "x-fc-region"
-	fcAccountID = "x-fc-account-id"
-	fcQualifier = "x-fc-qualifier"
-	fcVersionID = "x-fc-version-id"
+	fcRegion     = "x-fc-region"
+	fcAccountID  = "x-fc-account-id"
+	fcQualifier  = "x-fc-qualifier"
+	fcVersionID  = "x-fc-version-id"
+	fcRetryCount = "x-fc-retry-count"
 
 	fcStatus      = "x-fc-status"
 	fcControlPath = "x-fc-control-path"

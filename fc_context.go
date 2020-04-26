@@ -39,6 +39,7 @@ type FCContext struct {
 	Service     ServiceMeta
 	Region      string
 	AccountID   string
+	RetryCount  int //Indicates the number of retries of the asynchronous invoke
 }
 
 // NewFromContext ...
@@ -57,6 +58,11 @@ func NewFromContext(req *http.Request) *FCContext {
 	it, err := strconv.Atoi(itStr)
 	if err != nil {
 		it = -1
+	}
+	retryStr := req.Header.Get(fcRetryCount)
+	retryCnt, err := strconv.Atoi(retryStr)
+	if err != nil {
+		retryCnt = 0
 	}
 	ctx := &FCContext{
 		RequestID: req.Header.Get(fcRequestID),
@@ -80,8 +86,9 @@ func NewFromContext(req *http.Request) *FCContext {
 			Qualifier:   req.Header.Get(fcQualifier),
 			VersionID:   req.Header.Get(fcVersionID),
 		},
-		Region:    req.Header.Get(fcRegion),
-		AccountID: req.Header.Get(fcAccountID),
+		Region:     req.Header.Get(fcRegion),
+		AccountID:  req.Header.Get(fcAccountID),
+		RetryCount: retryCnt,
 	}
 
 	return ctx
