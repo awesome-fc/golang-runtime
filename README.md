@@ -4,7 +4,7 @@ Custom Runtime go sample
 
 [Custom Runtime manual](https://help.aliyun.com/document_detail/132044.html)
 
-[基于custom runtime 打造 golang runtime](https://help.aliyun.com/document_detail/132053.html)
+[基于 custom runtime 打造 golang runtime](https://help.aliyun.com/document_detail/132053.html)
 
 ## Event Function (No-HTTP-Trigger)
 
@@ -41,7 +41,6 @@ func main() {
 }
 ```
 
-
 ## HTTP Function
 
 Just implementing an HTTP server, Start the server with port = os.Getenv("FC_SERVER_PORT")
@@ -56,9 +55,15 @@ import (
 	"os"
 )
 
+const (
+	fcRequestID          = "x-fc-request-id"
+	fcLogTailStartPrefix = "FC Invoke Start RequestId: %s" // Start of log tail mark
+	fcLogTailEndPrefix   = "FC Invoke End RequestId: %s"  // End of log tail mark
+)
+
 func aHandler(w http.ResponseWriter, req *http.Request) {
-	requestID := req.Header.Get("x-fc-request-id")
-	fmt.Println(fmt.Sprintf("FC Invoke Start RequestId: %s", requestID))
+	requestID := req.Header.Get(fcRequestID )
+	fmt.Println(fmt.Sprintf(fcLogTailStartPrefix, requestID))
 
 	defer func() {
 		fmt.Println(fmt.Sprintf(fcLogTailEndPrefix, requestID))
@@ -69,8 +74,8 @@ func aHandler(w http.ResponseWriter, req *http.Request) {
 }
 
 func bHandler(w http.ResponseWriter, req *http.Request) {
-	requestID := req.Header.Get("x-fc-request-id")
-	fmt.Println(fmt.Sprintf("FC Invoke Start RequestId: %s", requestID))
+	requestID := req.Header.Get(fcRequestID)
+	fmt.Println(fmt.Sprintf(fcLogTailStartPrefix, requestID))
 
 	defer func() {
 		fmt.Println(fmt.Sprintf(fcLogTailEndPrefix, requestID))
