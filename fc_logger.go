@@ -56,6 +56,7 @@ func GetLoggerByRequestID(rid string) *logrus.Logger {
 			},
 		},
 	}
+	l = l.WithField("requestId", rid)
 	logMap[rid] = l
 	return l
 }
