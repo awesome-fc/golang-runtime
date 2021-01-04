@@ -42,7 +42,7 @@ func GetLogger() *logrus.Logger {
 }
 
 // GetLoggerByRequestID ...
-func GetLoggerByRequestID(rid string) *logrus.Logger {
+func GetLoggerByRequestID(rid string) *logrus.Entry {
 	if l, ok := logMap[rid]; ok {
 		return l
 	}
