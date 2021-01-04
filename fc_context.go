@@ -3,6 +3,8 @@ package golangruntime
 import (
 	"net/http"
 	"strconv"
+
+	"github.com/sirupsen/logrus"
 )
 
 // Credentials ...
@@ -39,7 +41,13 @@ type FCContext struct {
 	Service     ServiceMeta
 	Region      string
 	AccountID   string
-	RetryCount  int //Indicates the number of retries of the asynchronous invoke
+	RetryCount  int           //Indicates the number of retries of the asynchronous invoke
+	logger      *logrus.Entry `json:"-"`
+}
+
+// GetLogger ...
+func (m *FCContext) GetLogger() *logrus.Entry {
+	return m.logger
 }
 
 // NewFromContext ...
@@ -64,8 +72,9 @@ func NewFromContext(req *http.Request) *FCContext {
 	if err != nil {
 		retryCnt = 0
 	}
+	rid := req.Header.Get(fcRequestID)
 	ctx := &FCContext{
-		RequestID: req.Header.Get(fcRequestID),
+		RequestID: rid,
 		Credentials: Credentials{
 			AccessKeyID:     req.Header.Get(fcAccessKeyID),
 			AccessKeySecret: req.Header.Get(fcAccessKeySecret),
@@ -89,7 +98,7 @@ func NewFromContext(req *http.Request) *FCContext {
 		Region:     req.Header.Get(fcRegion),
 		AccountID:  req.Header.Get(fcAccountID),
 		RetryCount: retryCnt,
+		logger:     GetLoggerByRequestID(rid),
 	}
-
 	return ctx
 }
