@@ -61,6 +61,11 @@ func GetLoggerByRequestID(rid string) *logrus.Entry {
 	return le2
 }
 
+// RemoveLoggerByRequestID ...
+func RemoveLoggerByRequestID(rid string) {
+	delete(logMap, rid)
+}
+
 // SetLoggerLevel ...
 func SetLoggerLevel(level logrus.Level) *logrus.Logger {
 	log = &logrus.Logger{

@@ -22,6 +22,7 @@ func invokeHandler(w http.ResponseWriter, req *http.Request) {
 			w.Write([]byte(fmt.Sprintf("Error: %+v;\nStack: %s", r, string(debug.Stack()))))
 		}
 		fmt.Println(fmt.Sprintf(fcLogTailEndPrefix, requestID))
+		RemoveLoggerByRequestID(requestID)
 	}()
 
 	event, err := ioutil.ReadAll(req.Body)
@@ -44,6 +45,7 @@ func initializeHandler(w http.ResponseWriter, req *http.Request) {
 	fmt.Println(fmt.Sprintf(fcInitializeLogTailStartPrefix, requestID))
 	defer func() {
 		fmt.Println(fmt.Sprintf(fcLogInitializeTailEndPrefix, requestID))
+		RemoveLoggerByRequestID(requestID)
 	}()
 	fcCtx := NewFromContext(req)
 	if initialize == nil {
