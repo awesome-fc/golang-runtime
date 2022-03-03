@@ -22,7 +22,7 @@ var log = logrus.New()
 
 var logMap map[string]*logrus.Entry
 
-func initLogger() {
+func InitLogger() {
 	log = &logrus.Logger{
 		Out:   os.Stderr,
 		Level: logrus.InfoLevel,
