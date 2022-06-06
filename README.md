@@ -1,10 +1,9 @@
 # Overview
 
+**Function Compute currently supports golang runtime, it is recommended to use golang runtime directly**
+
 Custom Runtime go sample
-
-[Custom Runtime manual](https://help.aliyun.com/document_detail/132044.html)
-
-[基于 custom runtime 打造 golang runtime](https://help.aliyun.com/document_detail/132053.html)
+>[Custom Runtime manual](https://help.aliyun.com/document_detail/132044.html)
 
 ## Event Function (No-HTTP-Trigger)
 
