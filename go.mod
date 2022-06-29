@@ -1,4 +1,4 @@
-module example.com/m
+module github.com/awesome-fc/golang-runtime
 
 go 1.17
 
