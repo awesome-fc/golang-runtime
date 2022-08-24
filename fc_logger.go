@@ -20,8 +20,6 @@ func (u UTCFormatter) Format(e *logrus.Entry) ([]byte, error) {
 
 var log = logrus.New()
 
-var logMap map[string]*logrus.Entry
-
 func InitLogger() {
 	log = &logrus.Logger{
 		Out:   os.Stderr,
@@ -33,7 +31,6 @@ func InitLogger() {
 			},
 		},
 	}
-	logMap = make(map[string]*logrus.Entry)
 }
 
 // GetLogger ...
@@ -43,9 +40,6 @@ func GetLogger() *logrus.Logger {
 
 // GetLoggerByRequestID ...
 func GetLoggerByRequestID(rid string) *logrus.Entry {
-	if le, ok := logMap[rid]; ok {
-		return le
-	}
 	l := &logrus.Logger{
 		Out:   os.Stderr,
 		Level: logrus.InfoLevel,
@@ -57,13 +51,7 @@ func GetLoggerByRequestID(rid string) *logrus.Entry {
 		},
 	}
 	le2 := l.WithField("requestId", rid)
-	logMap[rid] = le2
 	return le2
-}
-
-// RemoveLoggerByRequestID ...
-func RemoveLoggerByRequestID(rid string) {
-	delete(logMap, rid)
 }
 
 // SetLoggerLevel ...
