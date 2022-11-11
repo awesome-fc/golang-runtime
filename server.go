@@ -19,8 +19,9 @@ func invokeHandler(w http.ResponseWriter, req *http.Request) {
 		if r := recover(); r != nil {
 			//if the function is abnormal, try ger error info as response
 			w.Header().Set(fcStatus, "404")
+			errMsg := fmt.Sprintf("Error: %+v;\nStack: %s", r, string(debug.Stack()))
 			fmt.Println(fmt.Sprintf(fcLogTailEndPrefix, requestID) + ", Error: Unhandled function error")
-			w.Write([]byte(fmt.Sprintf("Error: %+v;\nStack: %s", r, string(debug.Stack()))))
+			w.Write([]byte(errMsg))
 		} else {
 			fmt.Println(fmt.Sprintf(fcLogTailEndPrefix, requestID))
 		}
