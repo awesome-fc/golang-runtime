@@ -18,34 +18,8 @@ func (u UTCFormatter) Format(e *logrus.Entry) ([]byte, error) {
 	return u.Formatter.Format(e)
 }
 
-var log = logrus.New()
-
-var logMap map[string]*logrus.Entry
-
-func InitLogger() {
-	log = &logrus.Logger{
-		Out:   os.Stderr,
-		Level: logrus.InfoLevel,
-		Formatter: &UTCFormatter{
-			easy.Formatter{
-				TimestampFormat: "2006-01-02T15:04:05.999Z",
-				LogFormat:       "%time%: %requestId% [%lvl%]  %msg%\n",
-			},
-		},
-	}
-	logMap = make(map[string]*logrus.Entry)
-}
-
-// GetLogger ...
-func GetLogger() *logrus.Logger {
-	return log
-}
-
-// GetLoggerByRequestID ...
-func GetLoggerByRequestID(rid string) *logrus.Entry {
-	if le, ok := logMap[rid]; ok {
-		return le
-	}
+// GenLoggerByRequestID ...
+func GenLoggerByRequestID(rid string) *logrus.Entry {
 	l := &logrus.Logger{
 		Out:   os.Stderr,
 		Level: logrus.InfoLevel,
@@ -57,26 +31,5 @@ func GetLoggerByRequestID(rid string) *logrus.Entry {
 		},
 	}
 	le2 := l.WithField("requestId", rid)
-	logMap[rid] = le2
 	return le2
-}
-
-// RemoveLoggerByRequestID ...
-func RemoveLoggerByRequestID(rid string) {
-	delete(logMap, rid)
-}
-
-// SetLoggerLevel ...
-func SetLoggerLevel(level logrus.Level) *logrus.Logger {
-	log = &logrus.Logger{
-		Out:   os.Stderr,
-		Level: level,
-		Formatter: &UTCFormatter{
-			easy.Formatter{
-				TimestampFormat: "2006-01-02T15:04:05.999Z",
-				LogFormat:       "%time%: %requestId% [%lvl%]  %msg%\n",
-			},
-		},
-	}
-	return log
 }

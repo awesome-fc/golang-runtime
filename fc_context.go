@@ -42,12 +42,12 @@ type FCContext struct {
 	Region      string
 	AccountID   string
 	RetryCount  int           //Indicates the number of retries of the asynchronous invoke
-	logger      *logrus.Entry `json:"-"`
+	Logger      *logrus.Entry `json:"-"`
 }
 
 // GetLogger ...
 func (m *FCContext) GetLogger() *logrus.Entry {
-	return m.logger
+	return m.Logger
 }
 
 // NewFromContext ...
@@ -98,7 +98,7 @@ func NewFromContext(req *http.Request) *FCContext {
 		Region:     req.Header.Get(fcRegion),
 		AccountID:  req.Header.Get(fcAccountID),
 		RetryCount: retryCnt,
-		logger:     GetLoggerByRequestID(rid),
+		Logger:     GenLoggerByRequestID(rid),
 	}
 	return ctx
 }
