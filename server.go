@@ -73,7 +73,7 @@ func handle(w http.ResponseWriter, req *http.Request) {
 func Start(h func(ctx *FCContext, event []byte) ([]byte, error), init func(ctx *FCContext) error) {
 	handler = h
 	initialize = init
-	fmt.Println("FunctionCompute custom go runtime inited.")
+	fmt.Println("FunctionCompute go runtime inited.")
 	http.HandleFunc("/", handle)
 	port := os.Getenv("FC_SERVER_PORT")
 	if port == "" {
