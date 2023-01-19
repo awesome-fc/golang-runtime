@@ -73,6 +73,9 @@ func aHandler(w http.ResponseWriter, req *http.Request) {
 
 func bHandler(w http.ResponseWriter, req *http.Request) {
 	requestID := req.Header.Get(fcRequestID)
+	if requestID == "" {
+		requestID = "rid_123456789"
+    }
 	fmt.Println(fmt.Sprintf(fcLogTailStartPrefix, requestID))
 
 	defer func() {
@@ -90,7 +93,7 @@ func bHandler(w http.ResponseWriter, req *http.Request) {
 
 func main() {
 	fmt.Println("FunctionCompute go runtime inited.")
-	http.HandleFunc("/a", aHandler) // 如果不使用自定义域名，则 path 为 /2016-08-15/proxy/$serviceName/$functionName/a
+	http.HandleFunc("/a", aHandler) 
 	http.HandleFunc("/b", bHandler)
 	port := os.Getenv("FC_SERVER_PORT")
 	if port == "" {

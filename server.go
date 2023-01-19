@@ -26,7 +26,6 @@ func invokeHandler(w http.ResponseWriter, req *http.Request) {
 		} else {
 			fmt.Println(fmt.Sprintf(fcLogTailEndPrefix, requestID))
 		}
-		RemoveLoggerByRequestID(requestID)
 	}()
 
 	event, err := ioutil.ReadAll(req.Body)
@@ -49,7 +48,6 @@ func initializeHandler(w http.ResponseWriter, req *http.Request) {
 	fmt.Println(fmt.Sprintf(fcInitializeLogTailStartPrefix, requestID))
 	defer func() {
 		fmt.Println(fmt.Sprintf(fcLogInitializeTailEndPrefix, requestID))
-		RemoveLoggerByRequestID(requestID)
 	}()
 	fcCtx := NewFromContext(req)
 	if initialize == nil {
@@ -75,8 +73,7 @@ func handle(w http.ResponseWriter, req *http.Request) {
 func Start(h func(ctx *FCContext, event []byte) ([]byte, error), init func(ctx *FCContext) error) {
 	handler = h
 	initialize = init
-	fmt.Println("FunctionCompute go runtime inited.")
-	InitLogger()
+	fmt.Println("FunctionCompute custom go runtime inited.")
 	http.HandleFunc("/", handle)
 	port := os.Getenv("FC_SERVER_PORT")
 	if port == "" {
