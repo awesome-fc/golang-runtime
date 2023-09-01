@@ -32,6 +32,9 @@ func invokeHandler(w http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		panic(err)
 	}
+
+	defer req.Body.Close() // fix: Close the request body after processing to fix resource leak bug
+
 	fcCtx := NewFromContext(req)
 
 	resp, err := handler(fcCtx, event)
